@@ -25,8 +25,6 @@ hbs.registerHelper("join", function(context, block) {
 });
 
 const router = express.Router();
-const pageRouter = new Page(router);
-const apiRouter = new Api(router);
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -45,6 +43,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
+const pageRouter = new Page(router);
+const apiRouter = new Api(router);
 app.use('/', pageRouter);
 app.use('/api', apiRouter);
 
