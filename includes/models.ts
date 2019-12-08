@@ -8,7 +8,7 @@ import {Schema, Document} from "mongoose";
 import * as mongoose from "mongoose";
 import * as bcrypt from "bcryptjs";
 
-export const db = mongoose.createConnection('mongodb://localhost:27017');
+export const db = mongoose.createConnection('mongodb://localhost:27017/muzmatch', {useNewUrlParser: true,useUnifiedTopology: true});
 
 export function handleErrors(req, res, err) {
     return res.jsonp({
@@ -34,14 +34,14 @@ export enum Status {
 export enum AccessType {
     addMessage = "add-message",
     addComment = "add-comment",
-    editMessage = "edit-message",
-    editComment = "edit-comment",
-    flagMessage = "flag-message",
-    flagComment = "flag-comment",
+    editMessage = "edit-messages",
+    editComment = "edit-comments",
+    flagMessage = "flag-messages",
+    flagComment = "flag-comments",
     addPoints = "add-points",
 }
 
-export interface loginData {
+export interface LoginData {
     email: string,
     password: string,
 }
@@ -53,41 +53,61 @@ export const imageRegex = /([a-z\-_0-9\/\:\.]*\.(jpg|jpeg|png|gif))/i;
 
 
 export interface User extends Document {
+    nick: string,
     email: string,
     name: string,
-    image: string,
+    image?: string,
     bio: string,
     pass: string,
     points?: number,
     roles: UserRole[],
-    created?: string
+    access?: string[],
+    created?: string,
 }
 
-const UserSchema: Schema = new Schema({
-    email: { type: String, required: true, unique: true },
-    name: { type: String, required: true, match: emailRegex },
-    image: { type: String, required: true, match: imageRegex },
+export interface FrontendUser {
+    id: string,
+    name: string,
+    nick: string,
+    email: string,
+    access: string[],
+    image?: string,
+}
+
+export let UserSchema: Schema = new Schema({
+    nick: { type: String, required: true, unique: true },
+    email: { type: String, required: true, unique: true, match: emailRegex },
+    name: { type: String, required: true },
+    image: { type: String, match: imageRegex },
     bio: { type: String, required: true },
     pass: { type: String, required: true },
     points: { type: Number },
     roles: { type: [Schema.Types.ObjectId], required: true },
+    access: { type: [String] },
     created: { type: String, match: isoDateRegex, default: (new Date()).toISOString() },
 });
-UserSchema.statics.login = async function(login: loginData) {
+UserSchema.statics.login = async function(login: LoginData) {
     if(login.email && login.email.match(emailRegex)) {
-        let user = await this.findOne({ email: login.email });
-        if(bcrypt.compareSync(login.password, this.user.pass)){
+        let user = await this.findOne({email:login.email});
+        if(user && bcrypt.compareSync(login.password, user.pass)){
             return user;
         }
     }
-    throw new Error('Failed to login. Please try again');
+    return false;
+};
+UserSchema.statics.getAccess = async function() {
+    console.log(this.roles);
+    if(this.roles){
+        UserRoleModel.$where(() => this._id)
+    }
+    return false;
 };
 export const UserModel = db.model<User>('User', UserSchema, 'users');
 
 
 const UserRoleSchema: Schema = new Schema({
     name: { type: String, required: true },
-    access: { type: [String], enum: AccessType },
+    access: { type: [String], enum: Object.values(AccessType) },
 });
 
 export interface UserRole extends Document {
@@ -117,7 +137,7 @@ const MessageSchema: Schema = new Schema({
     createdBy: { type: Schema.Types.ObjectId, required: true },
     modified: { type: String, match: isoDateRegex },
     modifiedBy: { type: Schema.Types.ObjectId },
-    status: { type: String, enum: Status, default: Status.active },
+    status: { type: String, enum: Object.values(Status), default: Status.active },
 });
 export const MessageModel = db.model<Message>('Message', MessageSchema, 'messages');
 
@@ -146,7 +166,7 @@ const CommentSchema: Schema = new Schema({
     createdBy: { type: Schema.Types.ObjectId, required: true },
     modified: { type: String, match: isoDateRegex },
     modifiedBy: { type: Schema.Types.ObjectId },
-    status: { type: String, enum: Status, default: Status.active },
+    status: { type: String, enum: Object.values(Status), default: Status.active },
 });
 export const CommentModel = db.model<Comment>('Comment', CommentSchema, 'comments');
 
@@ -161,7 +181,7 @@ export interface Reaction extends Document {
 }
 
 const ReactionSchema: Schema = new Schema({
-    type: { type: String, required: true, enum: ReactionType },
+    type: { type: String, required: true, enum: Object.values(ReactionType) },
     score: { type: Number },
     attachedTo: { type: Schema.Types.ObjectId, required: true },
     created: { type: String, match: isoDateRegex, default: (new Date()).toISOString() },

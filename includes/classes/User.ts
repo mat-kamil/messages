@@ -4,7 +4,7 @@
  *
  * Created: 30/11/2019
  */
-import {emailRegex, loginData, User, UserModel} from "../models";
+import {emailRegex, LoginData, User, UserModel} from "../models";
 import * as bcrypt from 'bcryptjs';
 
 export class UserController {

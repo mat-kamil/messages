@@ -11,6 +11,7 @@ const hbs  = require('hbs');
 
 const Page = require('./routes/page');
 const Api = require('./routes/api');
+const Seeder = require('./includes/seeder');
 
 const app = express();
 
@@ -47,6 +48,9 @@ const pageRouter = new Page(router);
 const apiRouter = new Api(router);
 app.use('/', pageRouter);
 app.use('/api', apiRouter);
+
+const seeder = new Seeder();
+seeder.seed();
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
