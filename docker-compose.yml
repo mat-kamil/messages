@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  muzmatch-messages:
+    build: .
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 1001:80
+    working_dir: /usr/src/app
+    container_name: muzmatch-messages
+    command: set debug=* && ts-node-dev --respawn --transpileOnly ./src/app.ts
