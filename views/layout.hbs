@@ -4,6 +4,9 @@
     <title>{{title}}</title>
     <link rel='stylesheet' href='/css/style.css' />
     <link rel='stylesheet' href='/fonts/fontawesome/style.css' />
+    {{#each includeCss}}
+        <link rel='stylesheet' href='{{this}}' />
+    {{/each}}
     <link rel="shortcut icon" type="image/png" href="/assets/favicon.png">
     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,700,800&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -42,6 +45,9 @@
 </div>
 
 <!--scripts-->
+{{#each includeJs}}
+    <script src="{{this}}"></script>
+{{/each}}
 <script>
     // let app = new Vue({
     //     el:"#header-login",

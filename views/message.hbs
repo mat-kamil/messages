@@ -1,15 +1,20 @@
 <div class="message-page">
     <div class="message-section">
-        <h1>{{message.title}}</h1>
-        <div>
-        <span class="meta-section" title="{{ messageDate }}">
-            <span class="meta-section--title">{{ type }}</span>
-            <span class="meta-section--value">{{ fromNow }}</span>
-        </span>
-            <span class="meta-section">
-            <span class="meta-section--title">Viewed</span>
-            <span class="meta-section--value">{{ message.views }}</span>
-        </span>
+        <div class="message-section--header">
+            <h1>{{message.title}}</h1>
+            <div>
+            <span class="meta-section" title="{{ messageDate }}">
+                <span class="meta-section--title">{{ type }}</span>
+                <span class="meta-section--value">{{ fromNow }}</span>
+            </span>
+                <span class="meta-section">
+                <span class="meta-section--title">Viewed</span>
+                <span class="meta-section--value">{{ message.views }}</span>
+            </span>
+            </div>
+        </div>
+        <div class="message-section--body">
+
         </div>
     </div>
     <div id="message-vue" class="comment-section">

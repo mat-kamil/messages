@@ -24,6 +24,8 @@ function Page(router){
 
             res.render('message', {
                 title: message.title,
+                includeJs: ["/js/stackedit.min.js","/js/message.js"],
+                includeCss: ["/css/message.css"],
                 message: message,
                 messageDate: date,
                 fromNow: moment.utc(date).fromNow(),
