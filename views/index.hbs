@@ -1,2 +1,31 @@
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+<div id="homepage-vue">
+    <message v-for="message of messages"
+        v-bind:key="message.id"
+        v-bind:message="message"
+    ></message>
+</div>
+<script>
+    (function(Vue,http){
+        let app = new Vue({
+            el:"#homepage-vue",
+            components: {
+                'message': httpVueLoader('/vue/message.vue'),
+            },
+            data() {
+                return {
+                    messages: []
+                }
+            },
+            methods: {
+                getMessages() {
+                    axios.get("/messages").then((messages) => {
+                        this.messages = messages.data;
+                    })
+                }
+            },
+            created: function(){
+                this.getMessages();
+            }
+        });
+    })(Vue, axios);
+</script>

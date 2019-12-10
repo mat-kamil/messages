@@ -1,7 +1,16 @@
 import { Router } from 'express';
-import {FrontendUser, LoginData, UserModel} from "../includes/models";
+import {FrontendUser, LoginData, MessageModel, UserModel} from "../includes/models";
 import * as bcrypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";
+
+let slugify = (str)=>{
+    return (str + "").toLowerCase()
+        .replace(/(\w)\'/g, '$1')       // Special case for apostrophes
+        .replace(/[^a-z0-9_\-]+/g, '-') // Replace all non-word chars with -
+        .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+        .replace(/^-+/, '')             // Trim - from start of text
+        .replace(/-+$/, '');
+};
 
 /**
  * API module for all api endpoints
@@ -36,6 +45,21 @@ function Api(router: Router){
             { expiresIn: "1h" }
         );
         res.jsonp({"success":true, "token":token});
+    });
+    
+    router.get('/messages', async (req,res,next)=>{
+        let messages = await MessageModel.all();
+        let data = await Promise.all(messages.map(async row => {
+            let user = await UserModel.findById(row.createdBy);
+            return Object.assign({
+                url: `/${row.id}/${slugify(row.title)}`,
+                user: {
+                    name: user.name,
+                    points: user.points,
+                }
+            },JSON.parse(JSON.stringify(row)));
+        }));
+        res.jsonp(data);
     });
 
     /**

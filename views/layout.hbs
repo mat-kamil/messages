@@ -1,10 +1,54 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title>{{title}}</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    {{{body}}}
-  </body>
+    <link rel='stylesheet' href='/css/style.css' />
+    <link rel='stylesheet' href='/fonts/fontawesome/style.css' />
+    <link rel="shortcut icon" type="image/png" href="/assets/favicon.png">
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,700,800&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- fixed scripts-->
+    <script src="/js/es6-promise.min.js"></script>
+    <script src="/js/sass.sync.js"></script>
+    <script src="/js/axios.min.js"></script>
+    <script src="/js/moment.min.js"></script>
+    <script src="/js/vue.min.js"></script>
+    <script src="/js/httpVueLoader.js"></script>
+    <!--httpVueLoader - scss loader-->
+    <script>httpVueLoader.langProcessor.scss=function(scssText){return new Promise(function(resolve,reject){Sass.compile(scssText,function(result){result.status===0?resolve(result.text):reject(result)})})}</script>
+    <!--httpVueLoader - replace default http-->
+    <script>httpVueLoader.httpRequest=function(url){return axios.get(url).then(function(res){return res.data}).catch(function(err){return Promise.reject(err.status)})}</script>
+</head>
+<body>
+<div class="header">
+    <div class="inner">
+        <a class="header--img" href="/">
+            <img src="/assets/muzmessages-logo.png" alt="">
+        </a>
+        <div class="header--centre"></div>
+        <div class="header--right">
+            <div class="user">
+                <i class="icon user" title="User Full Name"></i>
+                <span class="points">110</span>
+            </div>
+            <i class="icon sign-in"></i>
+            <i class="icon sign-out"></i>
+        </div>
+    </div>
+</div>
+<div class="body">
+    <div class="body--center">{{{body}}}</div>
+</div>
+
+<!--scripts-->
+<script>
+    // let app = new Vue({
+    //     el:"#header-login",
+    //     components: {
+    //         'login': httpVueLoader('/vue/login.vue'),
+    //     }
+    // });
+</script>
+</body>
 </html>

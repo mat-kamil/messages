@@ -8,7 +8,7 @@ import {Schema, Document} from "mongoose";
 import * as mongoose from "mongoose";
 import * as bcrypt from "bcryptjs";
 
-export const db = mongoose.createConnection('mongodb://localhost:27017/muzmatch', {useNewUrlParser: true,useUnifiedTopology: true});
+export const db = mongoose.createConnection('mongodb://db:27017/muzmatch', {useNewUrlParser: true,useUnifiedTopology: true});
 
 export function handleErrors(req, res, err) {
     return res.jsonp({
@@ -47,7 +47,7 @@ export interface LoginData {
 }
 
 export const emailRegex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-export const isoDateRegex = /(((2000|2400|2800|((19|2[0-9])(0[48]|[2468][048]|[13579][26])))-02-29)|(((19|2[0-9])[0-9]{2})-02-(0[1-9]|1[0-9]|2[0-8]))|(((19|2[0-9])[0-9]{2})-(0[13578]|10|12)-(0[1-9]|[12][0-9]|3[01]))|(((19|2[0-9])[0-9]{2})-(0[469]|11)-(0[1-9]|[12][0-9]|30)))T([01][0-9]|[2][0-3]):[0-5][0-9]:[0-5][0-9]\.[0-9]{3}Z/;
+export const isoDateRegex = /^[0-9]{4}-((0[13578]|1[02])-(0[1-9]|[12][0-9]|3[01])|(0[469]|11)-(0[1-9]|[12][0-9]|30)|(02)-(0[1-9]|[12][0-9]))T(0[0-9]|1[0-9]|2[0-3]):(0[0-9]|[1-5][0-9]):(0[0-9]|[1-5][0-9])\.[0-9]{3}Z$/;
 export const imageRegex = /([a-z\-_0-9\/\:\.]*\.(jpg|jpeg|png|gif))/i;
 
 
@@ -132,13 +132,18 @@ const MessageSchema: Schema = new Schema({
     title: { type: String, required: true },
     content: { type: String, required: true },
     views: { type: Number, default: 0 },
+    comments: { type: Number, default: 0 },
     votes: { type: Number, default: 0 },
+    tags: { type: [String], default: 0 },
     created: { type: String, match: isoDateRegex, default: (new Date()).toISOString() },
     createdBy: { type: Schema.Types.ObjectId, required: true },
-    modified: { type: String, match: isoDateRegex },
+    modified: { type: String, match: isoDateRegex, default: null },
     modifiedBy: { type: Schema.Types.ObjectId },
     status: { type: String, enum: Object.values(Status), default: Status.active },
 });
+MessageSchema.statics.all = async function() {
+    return await this.find();
+};
 export const MessageModel = db.model<Message>('Message', MessageSchema, 'messages');
 
 
