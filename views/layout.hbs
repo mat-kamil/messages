@@ -18,6 +18,9 @@
     <script src="/js/moment.min.js"></script>
     <script src="/js/vue.min.js"></script>
     <script src="/js/httpVueLoader.js"></script>
+    <script src="/js/js.cookie.min.js"></script>
+    <script src="/js/jwt-decode.min.js"></script>
+
     <!--httpVueLoader - scss loader-->
     <script>httpVueLoader.langProcessor.scss=function(scssText){return new Promise(function(resolve,reject){Sass.compile(scssText,function(result){result.status===0?resolve(result.text):reject(result)})})}</script>
     <!--httpVueLoader - replace default http-->
@@ -30,13 +33,27 @@
             <img src="/assets/muzmessages-logo.png" alt="">
         </a>
         <div class="header--centre"></div>
-        <div class="header--right">
-            <div class="user">
-                <i class="icon user" title="User Full Name"></i>
-                <span class="points">110</span>
+        <div class="header--right" id="header--right">
+            <i class="icon sign-in" title="Log In" v-if="!user" @click="openLoginBox()"></i>
+            <user v-if="user" v-bind:user="user"></user>
+            <i class="icon sign-out" title="Log Out" v-if="!!user" @click="signout"></i>
+
+            {{{{raw}}}}
+            <div id="login" v-bind:class="{ show: showLogin }" @click="onClickLoginBox">
+                <form class="inner" @submit="signin">
+                    <div class="error" v-if="!!error">{{error}}</div>
+                    <div class="fieldInput email">
+                        <input type="email" v-model="email" name="email" placeholder="Email">
+                    </div>
+                    <div class="fieldInput password">
+                        <input :type="passFieldType" v-model="password" placeholder="Password">
+                        <i class="icon eye clickable" v-if="isPassField" @click="togglePassField"></i>
+                        <i class="icon eye-slash clickable" v-if="isTextField"  @click="togglePassField"></i>
+                    </div>
+                    <button type="submit" @click="signin">Login</button>
+                </form>
             </div>
-            <i class="icon sign-in"></i>
-            <i class="icon sign-out"></i>
+            {{{{/raw}}}}
         </div>
     </div>
 </div>
@@ -45,16 +62,9 @@
 </div>
 
 <!--scripts-->
+<script src="/js/layout.js"></script>
 {{#each includeJs}}
     <script src="{{this}}"></script>
 {{/each}}
-<script>
-    // let app = new Vue({
-    //     el:"#header-login",
-    //     components: {
-    //         'login': httpVueLoader('/vue/login.vue'),
-    //     }
-    // });
-</script>
 </body>
 </html>

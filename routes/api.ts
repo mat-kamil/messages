@@ -36,23 +36,35 @@ function Api(router: Router){
             name: user.name,
             email: user.email,
             nick: user.nick,
-            access: user.getAccess(),
-            image: user.image,
+            access: UserModel.getAccess(user),
+            img: user.img,
+            points: user.points,
         };
         const token = jwt.sign(
             userF,
             "muzmessages super secret key very long and complicated",
-            { expiresIn: "1h" }
+            { expiresIn: "216h" }
         );
         res.jsonp({"success":true, "token":token});
     });
     
+    /**
+     * Logout
+     */
+    router.get('/auth/logout', (req,res) => {
+        res.jsonp({ success:true });
+    })
+    
+    
+    /**
+     * Load message page
+     */
     router.get('/messages', async (req,res,next)=>{
         let messages = await MessageModel.all();
         let data = await Promise.all(messages.map(async row => {
             let user = await UserModel.findById(row.createdBy);
             return Object.assign({
-                url: `/${row.id}/${slugify(row.title)}`,
+                url: `/messages/${row.id}/${slugify(row.title)}`,
                 user: {
                     name: user.name,
                     points: user.points,

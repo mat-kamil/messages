@@ -84,17 +84,6 @@
             align-items: center;
             justify-content: space-between;
         }
-        .tags {
-            .tag {
-                display: inline-block;
-                padding: 2px 6px;
-                color: darken($fadedText, 10%);
-                margin: 3px;
-                background: $tagBg;
-                border-radius: 10px;
-                font-size: 0.8em;
-            }
-        }
         .meta--user {
             white-space: nowrap;
             

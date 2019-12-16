@@ -1,10 +1,1 @@
-{
-	"version": 3,
-	"file": "message.css",
-	"sources": [
-		"message.scss",
-		"settings.scss"
-	],
-	"names": [],
-	"mappings": ""
-}
+{"version":3,"sourceRoot":"","sources":["message.scss","settings.scss"],"names":[],"mappings":"AAIE;EACE;EACA,OCKQ;;ADHR;EAAuB,OCEpB;;ADDH;EAAkB;;AAEpB;EACE;;AACA;EACE;EACA;;AAGJ;EACE;;AAEF;EACE;EACA;EACA;EACA;;AAGE;EACE;EACA;EACA,OCpBI;;ADsBJ;EAAU;;;AAOhB;EACE;;AACA;EAAK;EAAkC","file":"message.css"}

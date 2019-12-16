@@ -6,7 +6,7 @@
 </div>
 <script>
     (function(Vue,http){
-        let app = new Vue({
+        let homepage = new Vue({
             el:"#homepage-vue",
             components: {
                 'message': httpVueLoader('/vue/message.vue'),
@@ -18,7 +18,7 @@
             },
             methods: {
                 getMessages() {
-                    axios.get("/messages").then((messages) => {
+                    http.get("/messages").then((messages) => {
                         this.messages = messages.data;
                     })
                 }

@@ -2,51 +2,72 @@
     <div class="message-section">
         <div class="message-section--header">
             <h1>{{message.title}}</h1>
-            <div>
-            <span class="meta-section" title="{{ messageDate }}">
-                <span class="meta-section--title">{{ type }}</span>
-                <span class="meta-section--value">{{ fromNow }}</span>
-            </span>
+            <div class="message-dates">
+                <span class="meta-section" title="{{ message.created }}">
+                    <span class="meta-section--title">Created</span>
+                    <span class="meta-section--value">{{ fromNow message.created }}</span>
+                </span>
+                {{#if message.modified}}
+                    <span class="meta-section" title="{{ message.modified }}">
+                        <span class="meta-section--title">Modified</span>
+                        <span class="meta-section--value">{{ fromNow message.modified }}</span>
+                    </span>
+                {{/if}}
                 <span class="meta-section">
-                <span class="meta-section--title">Viewed</span>
-                <span class="meta-section--value">{{ message.views }}</span>
-            </span>
+                    <span class="meta-section--title">Viewed</span>
+                    <span class="meta-section--value">{{ message.views }}</span>
+                </span>
             </div>
         </div>
         <div class="message-section--body">
-
+            <div class="message-section--content">
+                {{message.content}}
+            </div>
+            {{#if message.tags}}
+                <div class="tags">
+                    {{#each tags }}
+                        <div class="tag">{{ this }}</div>
+                    {{/each}}
+                </div>
+            {{/if}}
+            <div class="message-section--body-lower">
+                <div class="change">
+                    <a href="#">edit</a>
+                </div>
+                {{#if message.modified }}
+                    <div class="message-section--edited">
+                        <div class="date">Edited {{ fromNow message.modified }}</div>
+                        {{#compare message.modifiedBy.name message.createdBy.name operator="!=" }}
+                            <div class="user">
+                                <img class="user-icon" title="{{ message.modifiedBy.name }}" src="{{ message.modifiedBy.img }}"/>
+                                <div class="inner">
+                                    <div class="name">{{ message.modifiedBy.name }}</div>
+                                    <div class="points">{{ message.modifiedBy.points }}</div>
+                                </div>
+                            </div>
+                        {{/compare}}
+                    </div>
+                {{/if}}
+                <div class="message-section--user">
+                    <div class="date">Asked {{ fromNow message.created }}</div>
+                    <div class="user">
+                        <img class="user-icon" title="{{ message.createdBy.name }}" src="{{ message.createdBy.img }}"/>
+                        <div class="inner">
+                            <div class="name">{{ message.createdBy.name }}</div>
+                            <div class="points">{{ message.createdBy.points }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <div id="message-vue" class="comment-section">
+    <div id="message-vue" class="comments-section">
+        <div class="comments-section--header">
+            <h2>{{ message.comments }} Comments</h2>
+        </div>
         <comment v-for="comment of comments"
                  v-bind:key="comment.id"
                  v-bind:comment="comment"
         ></comment>
     </div>
 </div>
-<script>
-    (function(Vue,http){
-        let app = new Vue({
-            el:"#message-vue",
-            components: {
-                'comment': httpVueLoader('/vue/comment.vue'),
-            },
-            data() {
-                return {
-                    message: void 0,
-                    comments: []
-                }
-            },
-            methods: {
-                getComments() {
-                    axios.get("/comments").then((comments) => {
-                        this.comments = comments.data;
-                    })
-                }
-            },
-            created: function(){
-                //this.getComments();
-            }
-        });
-    })(Vue, axios);
-</script>
