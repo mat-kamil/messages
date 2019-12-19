@@ -1,7 +1,30 @@
 @import "./settings";
 
 
+/**
+ * PAGE
+ */
+editable { display:block; }
 .message-page {
+  
+  #message-editable,
+  #title-edit,
+  #save-button { display: none; }
+  #message-content {
+    display:block;
+    padding: 11px 11px 43px;
+  }
+  #edit-button,
+  #title { display:block; }
+  &.editing {
+    #message-editable,
+    #title-edit,
+    #save-button { display: block; }
+    #message-content,
+    #edit-button,
+    #title { display:none; }
+  }
+  
   .meta-section {
     display: inline-block;
     color: $fadedText;
@@ -22,8 +45,11 @@
   .message-section--body-lower {
     padding: 30px 0 10px;
     display: flex;
+    flex-flow: row wrap;
     align-items: flex-start;
     justify-content: space-between;
+    
+    
     
     div.change {
       a {
@@ -36,7 +62,48 @@
     }
   }
 }
+.error {
+  background: lighten($primary, 37%);
+  border: 1px solid lighten($primary, 33%);
+  color: $primary;
+  padding: 20px;
+  margin-bottom: 20px;
+  flex: 1 0 100%;
+  
+  &:empty { display:none; }
+}
 
+/**
+ * EDITOR
+ */
+.wk-container {
+  border: 1px solid lighten($tertiary, 20%);
+}
+.wk-wysiwyg {
+  width: 100%;
+  padding: 10px;
+  outline: none;
+}
+.wk-commands {
+  background: lighten($tertiary, 35%);
+  .wk-command {
+    padding: 3px 15px;
+    border-width: 0;
+    background: lighten($tertiary, 35%);
+    border-color:  lighten($tertiary, 20%);
+    color: $tertiary;
+    &:hover { background: lighten($tertiary, 30%); }
+    &.woofmark-command-quote,
+    &.woofmark-command-code { display: none; }
+    
+    + .wk-command { border-left-width: 1px; }
+  }
+}
+.wk-switchboard { display: none; }
+
+/**
+ * COMMENTS
+ */
 .comments-section {
   .comments-section--header {
     padding: 10px 20px;

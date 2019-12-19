@@ -53,6 +53,9 @@ hbs.registerHelper('compare', function(lvalue, rvalue, options) {
 hbs.registerHelper("join", function(context, block) {
   return context.join(block.hash.delimiter);
 });
+hbs.registerHelper("json", function(context) {
+  return JSON.stringify(context);
+});
 
 const router = express.Router();
 
@@ -75,8 +78,8 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 const pageRouter = new Page(router);
 const apiRouter = new Api(router);
-app.use('/', pageRouter);
 app.use('/api', apiRouter);
+app.use('/', pageRouter);
 
 const seeder = new Seeder();
 seeder.seed();
@@ -94,7 +97,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render('error', {title:"Error!"});
 });
 
 let port = process.env.PORT || '1975';

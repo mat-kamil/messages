@@ -4,7 +4,7 @@
  *
  * Created: 30/11/2019
  */
-import {db, MessageModel, UserModel, UserRoleModel} from './models';
+import {CommentModel, MessageModel, UserModel, UserRoleModel} from './models';
 
 export class Seeder {
     constructor() {
@@ -20,117 +20,25 @@ export class Seeder {
         }
         if (!await UserModel.exists({})) {
             await UserModel.create([
-                {
-                    "_id": "5de3ddd3405c2f0524815cff",
-                    "nick": "RuthOut",
-                    "email": "user1@muz.com",
-                    "img": "/assets/user-1.png",
-                    "name": "Ruth Outhere",
-                    "bio": "The truth is out there",
-                    "pass": "$2a$08$nx4POTPAhYDwX/JXII0YAeK1oaBG8WyRmlqn/pmItab3XvtE2oI76",
-                    "points": "15",
-                    "roles": ["5ddda04fa9f267091491383e"],
-                    "created": "2019-12-01T15:51:29.472Z"
-                },
-                {
-                    "_id": "5de3e2907a95a20524c6e772",
-                    "nick": "greatul",
-                    "email": "user2@muz.com",
-                    "img": "/assets/user-2.png",
-                    "name": "Greer Tully",
-                    "bio": "A career in telling the truth",
-                    "pass": "$2a$08$nx4POTPAhYDwX/JXII0YAeK1oaBG8WyRmlqn/pmItab3XvtE2oI76",
-                    "points": "13485",
-                    "roles": ["5ddda04fa9f267091491383e"],
-                    "badges": ["edit-message", "edit-comment", "flag"],
-                    "created": "2019-12-01T15:51:29.472Z"
-                },
-                {
-                    "_id": "5de3e3097a95a20524c6e773",
-                    "nick": "MuzAdmin",
-                    "email": "admin@muz.com",
-                    "img": "/assets/user-3.png",
-                    "name": "Muz Admin",
-                    "bio": "My auth is your auth",
-                    "pass": "$2a$08$nx4POTPAhYDwX/JXII0YAeK1oaBG8WyRmlqn/pmItab3XvtE2oI76",
-                    "points": "0",
-                    "roles": ["5ddda269a9f267091491383f", "5ddda04fa9f267091491383e", "5ddd9e2c923bc30914e9c4dc"],
-                    "created": "2019-12-01T15:51:29.472Z"
-                }
+                {"_id":"5de3ddd3405c2f0524815cff","roles":[],"access":[],"created":"2019-12-01T15:51:29.472Z","nick":"RuthOut","email":"ruth@muz.com","img":"/assets/user-1.png","name":"Ruth Outhere","bio":"The truth is out there","pass":"$2a$08$nx4POTPAhYDwX/JXII0YAeK1oaBG8WyRmlqn/pmItab3XvtE2oI76","points":15,"__v":0},
+                {"_id":"5de3e2907a95a20524c6e772","roles":[],"access":[],"created":"2019-12-01T15:51:29.472Z","nick":"greatul","email":"greer@muz.com","img":"/assets/user-2.png","name":"Greer Tully","bio":"A career in telling the truth","pass":"$2a$08$nx4POTPAhYDwX/JXII0YAeK1oaBG8WyRmlqn/pmItab3XvtE2oI76","points":13485,"__v":0},
+                {"_id":"5de3e3097a95a20524c6e773","roles":[],"access":[],"created":"2019-12-01T15:51:29.472Z","nick":"Tony Michaels","email":"tony@muz.com","img":"/assets/user-3.png","name":"Tony Michaels","bio":"My auth is your auth","pass":"$2a$08$nx4POTPAhYDwX/JXII0YAeK1oaBG8WyRmlqn/pmItab3XvtE2oI76","points":0,"__v":0}
             ]);
         }
         
         if (!await MessageModel.exists({})) {
             await MessageModel.create([
-                {
-                    "_id": "5deec8eec13791001f5ad86b",
-                    "views": 5,
-                    "comments": 0,
-                    "votes": 0,
-                    "tags": ["salah", "al-sunnah-wal-jamaah", "salah-times"],
-                    "modified": null,
-                    "status": "active",
-                    "title": "Message One",
-                    "content": "Content One",
-                    "created": "2019-12-01T15:51:29.472Z",
-                    "createdBy": "5de3ddd3405c2f0524815cff"
-                },
-                {
-                    "_id": "5deec8eec13791001f5ad86c",
-                    "views": 0,
-                    "comments": 0,
-                    "votes": 0,
-                    "tags": ["salah", "al-sunnah-wal-jamaah", "salah-times"],
-                    "modified": null,
-                    "status": "active",
-                    "title": "Message Two",
-                    "content": "Content Two",
-                    "created": "2019-12-01T15:51:29.472Z",
-                    "createdBy": "5de3ddd3405c2f0524815cff"
-                },
-                {
-                    "_id": "5deec8eec13791001f5ad86d",
-                    "views": 20,
-                    "comments": 0,
-                    "votes": 0,
-                    "tags": ["salah", "al-sunnah-wal-jamaah", "salah-times"],
-                    "modified": null,
-                    "status": "active",
-                    "title": "Message Three",
-                    "content": "Content Three",
-                    "created": "2019-12-01T15:51:29.472Z",
-                    "createdBy": "5de3ddd3405c2f0524815cff"
-                },
-                {
-                    "_id": "5deec8eec13791001f5ad86e",
-                    "views": 5,
-                    "comments": 0,
-                    "votes": 0,
-                    "tags": ["salah", "al-sunnah-wal-jamaah", "salah-times"],
-                    "modified": null,
-                    "status": "active",
-                    "title": "Message Four",
-                    "content": "Content Four",
-                    "created": "2019-12-01T15:51:29.472Z",
-                    "createdBy": "5de3ddd3405c2f0524815cff"
-                },
-                {
-                    "_id": "5deec8eec13791001f5ad86f",
-                    "views": 3,
-                    "comments": 0,
-                    "votes": 0,
-                    "tags": ["salah", "al-sunnah-wal-jamaah", "salah-times"],
-                    "status": "active",
-                    "title": "Message Five",
-                    "content": "Content Five",
-                    "created": "2019-12-01T15:51:29.472Z",
-                    "modified": "2019-12-01T16:51:29.472Z",
-                    "createdBy": "5de3ddd3405c2f0524815cff",
-                    "modifiedBy": "5de3ddd3405c2f0524815cff"
-                }
+                {"_id":"5dfadeeb9446040023a789fb","views":20,"comments":1,"votes":0,"tags":[],"created":"2019-12-19T02:20:42.345Z","modified":null,"status":"active","title":"Is it permissible for the worshipper to recite out loud in these prayers and rak‘ahs?","content":"Are these prayers done with the recitation out loud or quietly: \n\n- the naafil prayer of Maghrib, \n- the third rak'ah of Witr prayer when it is done like Maghrib \\[three consecutive rak'ahs\\], \n- qiyaam al-layl \\[voluntary prayers at night\\], \n- Sunnah of Fajr, \n- and Duha prayer?","createdBy":"5de3ddd3405c2f0524815cff","__v":0},
+                {"_id":"5dfae5db90d8bf002389f583","views":2,"comments":1,"votes":0,"tags":[],"created":"2019-12-19T02:48:22.189Z","modified":null,"status":"active","title":"What is meant by “Call upon Allah, being certain of a response”","content":"One of the conditions of supplication being answered is utmost trust in the power of Allah, but what if calamities happen repeatedly? Do I have to continue saying that if calamities happen, I will accept the divine decree, in the hope that the ultimate outcome will be good? Isn't this doubting the power of Allah? Or is this regarded as part of my trust in Allah? Also, what if I trusted Allah, but I was not certain that I had fulfilled all the conditions of supplication being answered? Is my intention to fulfil them sufficient to cover my ignorance, knowing that I have tried to learn, and I think that this is the most knowledge that I am able to learn, but I feel that I am falling short?","createdBy":"5de3ddd3405c2f0524815cff","__v":0}
             ]);
         }
-        
+    
+        if (!await CommentModel.exists({})) {
+            await CommentModel.create([
+                {"_id":"5dfadf9d9446040023a789fc","created":"2019-12-19T02:20:42.346Z","status":"active","content":"Praise be to Allah. \n\nFirstly:\n\nThe scholars (may Allah have mercy on them) stated that what is prescribed is for the worshipper to recite quietly in naafil prayers offered during the day, and when praying at night, he has the choice between reciting out loud or quietly, but reciting out loud is better.\n\nIn Kashshaaf al-Qinaa' (1/441) it says that what is meant by day here is sunrise, not the break of dawn, so the regular Sunnah prayer of Fajr is a prayer that is offered at night.\n\nWe have quoted the views of the scholars concerning that in the answer to question no. 91325\\.\n\nBased on that, the worshipper should recite quietly in Duha prayer, because it is a prayer that is offered during the day.\n\nWith regard to the naafil prayer of Maghrib, the third rak'ah or Witr, qiyaam al-layl and the Sunnah of Fajr, the worshipper has the choice between reciting out loud or quietly, although reciting out loud is better, unless reciting quietly helps him to focus more, or he has people with him who will be disturbed by his reciting out loud, such as one who sleeping or one who is sick, and the like.\n\nShaykh 'Abd al-'Azeez ibn Baaz (may Allah have mercy on him) said:\n\nThe Sunnah in prayers at night is to recite out loud, whether the worshipper is praying on his own or has someone else with him. If his wife or other women are praying with him, then they should pray behind him, even if there is only one woman. If he is praying on his own, then he has the choice between reciting out loud or quietly, and what is prescribed is for him to do that which help him focus more. 'Aa'ishah (may Allah be pleased with her) was asked about that and she said: The Prophet (blessings and peace of Allah be upon him) would sometimes recite out loud in his night prayers and sometimes he would recite quietly. It is proven from him (blessings and peace of Allah be upon him), in the hadith of Hudhayfah (may Allah be pleased with him) and others, that he (blessings and peace of Allah be upon him) used to recite out loud in the night prayers; he would pause at a verse that spoke of mercy and ask for mercy, and he would pause at a verse that mentioned punishment and seek refuge with Allah from that, and he would pause at a verse that mentioned glorification of Allah and glorify Him, meaning when reciting verses that mention the divine names and attributes, so he would glorify Allah. Allah, may He be glorified and exalted, says (interpretation of the meaning): \"There has certainly been for you in the Messenger of Allah an excellent pattern \\[example\\]\" \\[al-Ahzaab 33:21\\]. And the Prophet (blessings and peace of Allah be upon him) said: \"Pray as you have seen me praying.\" Narrated by al-Bukhaari in his Saheeh.\n\nThese hadiths indicate that reciting out loud in the night prayers is better, and that is because it helps the heart to focus more and is more beneficial to those who are listening, unless there are people around him who are sick or sleeping, or are praying or reading Qur'an, in which case it is better for him to lower his voice so that he will not distract other worshippers and readers, or wake up those who are sleeping, or disturb those who are sick.\n\nIf he recites quietly in some of the night prayers when he is alone, there is nothing wrong with that, because of the hadith of 'Aa'ishah mentioned above, and because that may help him to focus more and may be easier for him sometimes.\n\nMajmoo' Fataawa ash-Shaykh Ibn Baaz (11/124, 125).\n\nThe shaykh (may Allah have mercy on him) also said:\n\nIf a person is praying by himself, it is prescribed for him to do that which will help him to focus more, of reciting out loud or quietly, if he is offering a naafil prayer at night and his reciting out loud will not disturb anyone. But if there are people around him who may be disturbed by his reciting out loud, such as other worshippers, people who are reading Qur'an or people who are sleeping, it is prescribed for him to keep his voice low.\n\nBut with regard to prayers offered during the day, such as Duha prayer, regular Sunnah prayers, Zuhr and 'Asr, the Sunnah is to recite quietly in these prayers.\n\nMajmoo' Fataawa ash-Shaykh Ibn Baaz (11/126, 127).\n\nSecondly:\n\nWith regard to the questioner mentioning the third rak'ah of Witr prayer when it is done like Maghrib \\[three consecutive rak'ahs\\], the Prophet (blessings and peace of Allah be upon him) forbade praying Witr in the same manner as Maghrib, and he (blessings and peace of Allah be upon him) said: \"Do not pray Witr with three rak'ahs, making it like Maghrib.\" Narrated by al-Haakim (1/304); al-Bayhaqi (3/31); ad-Daaraqutni (p. 172). Al-Haafiz Ibn Hajar said in Fath al-Baari (4/301): Its isnaad is \\[saheeh\\] according to the conditions of the two shaykhs \\[al-Bukhaari and Muslim\\].\n\nIt is narrated in a saheeh report from the Prophet (blessings and peace of Allah be upon him) that he prayed Witr with three rak'ahs in two ways:\n\nA prayer of three rak'ahs with two tashahhuds and two salaams, so he prayed two rak'ahs then said the salaam, then he prayed one rak'ah and said the salaam.\n\nIt was narrated that Ibn 'Umar (may Allah be pleased with him) said: The Messenger of Allah (blessings and peace of Allah be upon him) used to separate ash-shaf' \\[the even, the first two rak'ahs of Witr\\] and al-witr \\[the odd, the last rak'ah of Witr\\] with a tasleem \\[saying salaam\\] that he made us hear. Narrated by Ibn Hibbaan (2435). Al-Haafiz Ibn Hajar said in Fath al-Baari (2/482): Its isnaad is qawiy \\[strong\\].\n\nHe would pray the three rak'ahs with one tashahhud and two tasleems.\n\nIt was narrated that 'Aa'ishah (may Allah be pleased with her) said: The Messenger of Allah (blessings and peace of Allah be upon him) used to pray Witr with three rak'ahs, only sitting \\[for tashahhud\\] in the last of them. Narrated by al-Bayhaqi (4581). This hadith was classed as saheeh by al-Haakim, and adh-Dhahabi agreed with him. Al-Mustadrak (1/304). Classed as saheeh by an-Nawawi in al-Majmoo' (4/7).\n\nShaykh al-Albaani (may Allah have mercy on him) said:\n\nWith regard to praying five or three, sitting between each two rak'ahs without saying the tasleem, we do not find that to be proven from the Prophet (blessings and peace of Allah be upon him). The basic principle is that it is permissible, but because the Prophet (blessings and peace of Allah be upon him) forbade praying Witr with three rak'ahs, and explained that by saying, \"Do not pray Witr with three rak'ahs, making it like Maghrib,\" in that case the one who prays Witr with three rak'ahs must avoid making it resemble Maghrib, which may be done in two ways:\n\nThe first is by saying the tasleem between ash-shaf' \\[the even, the first two rak'ahs of Witr\\] and al-witr \\[the odd, the last rak'ah of Witr\\], which is the stronger view and is preferable; and the second is by not sitting \\[for tashahhud\\] between the first two rak'ahs and the last rak'ah,. And Allah knows best.\n\nQiyaam Ramadan (p. 22).\n\nFor more information, please see the answer to question no. 46544\\.\n\nAnd Allah knows best.","message":"5dfadeeb9446040023a789fb","createdBy":"5de3e2907a95a20524c6e772","lft":1,"rgt":2,"__v":0,"root":"5dfadf9d9446040023a789fc","modified":"2019-12-19T02:48:45.049Z","modifiedBy":"5de3ddd3405c2f0524815cff"},
+                {"_id":"5dfae5ea90d8bf002389f584","created":"2019-12-19T02:48:22.191Z","status":"active","content":"Praise be to Allah.\n\n  \nFirstly:\n\n  \nPart of the etiquette of supplication (du'aa') and one of the means of attaining a response is to think positively of Allah and believe that Allah will answer his supplication and will never disappoint, because of the report narrated by at-Tirmidhi (3479) from Abu Hurayrah, who said: The Messenger of Allah (blessings and peace of Allah be upon him) said: \"Call upon Allah, being certain of a response, and know that Allah will not answer a supplication from a negligent and heedless heart.\" This hadith was classed as hasan by al-Albaani in Saheeh at-Tirmidhi.\n\n  \nIt says in Tuhfat al-Ahwadhi (9/316): The words \"being certain of a response\" mean: when you are certain of that, meaning that when you offer the supplication, you are in a state in which you are deserving of an answer, in the sense that you are doing what is right and avoiding what is wrong; paying attention to the conditions of supplication, such as presence of mind and choosing the best times and places; and making the most of appropriate situations such as prostration, and so on, so that you think it more likely that the supplication will be answered rather than rejected.\n\n  \nOr it means: when you believe that Allah will not disappoint you, because of His abundant generosity, perfect might and all-encompassing knowledge, so that you are hoping for a response and sincere in your supplication, because unless the hope of the supplicant is firm, his supplication will not be sincere. End quote.\n\n  \nThe believer does not doubt the might of Allah, may He be exalted, because doubting the might of Allah constitutes disbelief. But he may think that Allah will never answer his supplication because he does not deserve an answer, for example, or he does not fulfil the conditions of supplication being accepted.\n\n  \nSo he should stop thinking like this, and focus with all his heart on his Lord, and he should have great hope and be optimistic, because Allah is as His slave thinks He is, as it says in the hadith; at the same time, he should strive to fulfil the conditions of supplication being answered.\n\n  \nAl-Qurtubi said in al-Mufhim: It was said that what is meant by \"as My slave thinks I am\" is his thinking that he will receive an answer when he offers supplication, and thinking that it will be accepted when he repents, and thinking that he will be forgiven when he seeks forgiveness, and thinking that he will be rewarded when he does an act of worship and fulfils all its conditions, trusting that Allah's promise is true. This is supported by the Prophet's words in another hadith: \"Call upon Allah, being certain of a response\".\n\n  \nHe said: Hence the individual should strive hard to do what is required of him, trusting that Allah will accept it and forgive him, because He has promised that and He does not break His promise. If the individual believes or thinks that Allah will not accept it, and that it will not benefit him, this is despairing of the mercy of Allah, which is a major sin; whoever dies in that state will be left to what he thought, as it says in some versions of the hadith mentioned above: \"So let My slave think of Me as he wishes.\"\n\n  \nHe said: As for thinking that one will be forgiven whilst persisting in sin, this is pure ignorance and heedlessness, and it is more akin to the way of thinking of the Murji'ah.\n\n  \nEnd quote from Tuhfat al-Ahwadhi (7/54).\n\n  \nFor information on the conditions of supplication being answered, and the impediments to that, please see the answers to questions no. 13506, 5113 and 130713\\.\n\n  \nSecondly:\n\n  \nWith regard to your saying when calamities are ongoing, \"if calamities happen, I will accept the divine decree, in the hope that the ultimate outcome will be good\", this is not regarded as doubting the power of Allah, may He be exalted; rather it is acknowledging the power of Allah, may He be exalted, thinking positively of Him and hoping that the ultimate outcome will be good.\n\n  \nIt should be noted that if the response is slow in coming, and what the person asked of his Lord does not happen, this comes under the heading of trials with which Allah tests His slaves and tests their patience and faith in Him.\n\n  \nWe have quoted some beneficial words from Imam Ibn al-Jawzi (may Allah have mercy on him) concerning this matter in the answer to question no. 127017\\.\n\n  \nSo ignore the persistent thoughts (waswaas), and continue to call upon Allah, may He be exalted, and ask of Him, for He answers the supplication of the one who is in distress, and He loves those who persist in supplication. If someone continues to knock at the door, it will soon be opened to him.\n\n  \nMay Allah enable us and you to obey Him and attain His pleasure.\n\n  \nSee also the answer to question no. 126946\\.\n\n  \nAnd Allah knows best.","message":"5dfae5db90d8bf002389f583","createdBy":"5de3e3097a95a20524c6e773","lft":1,"rgt":2,"__v":0,"root":"5dfae5ea90d8bf002389f584"}
+            ]);
+        }
         return true;
     }
 }

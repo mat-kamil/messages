@@ -157,27 +157,41 @@ export interface Comment extends Document {
     content: string,
     lft: number,
     rgt: number,
+    message: string,
     root?: string,
     parent?: string,
     created?: string,
     createdBy?: string,
     modified?: string,
     modifiedBy?: string,
-    status: string,
+    children?: string,
+    status?: string,
 }
 
 const CommentSchema: Schema = new Schema({
     content: { type: String, required: true },
-    lft: { type: Number, required: true },
-    rgt: { type: Number, required: true },
-    root: { type: Schema.Types.ObjectId },
-    parent: { type: Schema.Types.ObjectId },
+    lft: { type: Number },
+    rgt: { type: Number },
+    message: { type: Schema.Types.ObjectId, ref:'Message', required: true },
+    root: { type: Schema.Types.ObjectId, ref:'Comment'},
+    parent: { type: Schema.Types.ObjectId, ref:'Comment' },
     created: { type: String, match: isoDateRegex, default: (new Date()).toISOString() },
     createdBy: { type: Schema.Types.ObjectId, ref:'User', required: true },
     modified: { type: String, match: isoDateRegex },
     modifiedBy: { type: Schema.Types.ObjectId, ref:'User' },
     status: { type: String, enum: Object.values(Status), default: Status.active },
 });
+CommentSchema.statics.shiftNode = async function(min, delta, root) {
+    //assign right
+    this.find({ root:root }).filter(e=>{ e.lft >= min }).each(e => e.lft += delta).save();
+    this.find({ root:root }).filter(e=>{ e.rgt >= min }).each(e => e.rgt += delta).save();
+};
+CommentSchema.statics.getByMessage = async function(id: string) {
+    if(id) {
+        return await this.find({ message:id });
+    }
+    return false;
+};
 export const CommentModel = db.model<Comment>('Comment', CommentSchema, 'comments');
 
 

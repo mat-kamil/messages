@@ -26,12 +26,32 @@ function Page(router){
             
             res.render('message', {
                 title: message.title,
-                includeJs: ["/js/stackedit.min.js","/js/message.js"],
-                includeCss: ["/css/message.css"],
+                includeJs: [
+                    "/js/lib/domador.min.js",
+                    "/js/lib/megamark.min.js",
+                    "/js/lib/woofmark.min.js",
+                    "/js/message.js"
+                ],
+                includeCss: ["/css/woofmark.min.css","/css/message.css"],
                 message: message,
             });
         }
     });
+    
+    /* GET new message page */
+    router.get('/messages/new', async (req,res, next) => {
+        res.render('message', {
+            title: "New Message",
+            includeJs: [
+                "/js/lib/domador.min.js",
+                "/js/lib/megamark.min.js",
+                "/js/lib/woofmark.min.js",
+                "/js/message.js"
+            ],
+            includeCss: ["/css/woofmark.min.css","/css/message.css"],
+        });
+    });
+    
     return router;
 }
 

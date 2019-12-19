@@ -1,44 +1,108 @@
+/**
+ * PAGE
+ */
+editable {
+  display: block; }
+
+.message-page #message-editable,
+.message-page #title-edit,
+.message-page #save-button {
+  display: none; }
+
+.message-page #message-content {
+  display: block;
+  padding: 11px 11px 43px; }
+
+.message-page #edit-button,
+.message-page #title {
+  display: block; }
+
+.message-page.editing #message-editable,
+.message-page.editing #title-edit,
+.message-page.editing #save-button {
+  display: block; }
+
+.message-page.editing #message-content,
+.message-page.editing #edit-button,
+.message-page.editing #title {
+  display: none; }
+
 .message-page .meta-section {
   display: inline-block;
-  color: #989797;
-}
-.message-page .meta-section .meta-section--value {
-  color: #333;
-}
-.message-page .meta-section + .meta-section {
-  padding-left: 5px;
-}
+  color: #989797; }
+  .message-page .meta-section .meta-section--value {
+    color: #333; }
+  .message-page .meta-section + .meta-section {
+    padding-left: 5px; }
+
 .message-page .message-section--header {
-  padding: 10px 20px;
-}
-.message-page .message-section--header .message-dates {
-  padding-bottom: 20px;
-  border-bottom: 1px solid #ddd;
-}
+  padding: 10px 20px; }
+  .message-page .message-section--header .message-dates {
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ddd; }
+
 .message-page .message-section--body {
-  padding: 10px 20px;
-}
+  padding: 10px 20px; }
+
 .message-page .message-section--body-lower {
   padding: 30px 0 10px;
   display: flex;
+  flex-flow: row wrap;
   align-items: flex-start;
-  justify-content: space-between;
-}
-.message-page .message-section--body-lower div.change a {
-  font-weight: bold;
-  text-decoration: none;
-  color: #989797;
-}
-.message-page .message-section--body-lower div.change a:hover {
-  text-decoration: underline;
-}
+  justify-content: space-between; }
+  .message-page .message-section--body-lower div.change a {
+    font-weight: bold;
+    text-decoration: none;
+    color: #989797; }
+    .message-page .message-section--body-lower div.change a:hover {
+      text-decoration: underline; }
 
+.error {
+  background: #fff9fa;
+  border: 1px solid #fee5eb;
+  color: #fb406c;
+  padding: 20px;
+  margin-bottom: 20px;
+  flex: 1 0 100%; }
+  .error:empty {
+    display: none; }
+
+/**
+ * EDITOR
+ */
+.wk-container {
+  border: 1px solid #98adfd; }
+
+.wk-wysiwyg {
+  width: 100%;
+  padding: 10px;
+  outline: none; }
+
+.wk-commands {
+  background: #e3e9fe; }
+  .wk-commands .wk-command {
+    padding: 3px 15px;
+    border-width: 0;
+    background: #e3e9fe;
+    border-color: #98adfd;
+    color: #345dfb; }
+    .wk-commands .wk-command:hover {
+      background: #cad5fe; }
+    .wk-commands .wk-command.woofmark-command-quote, .wk-commands .wk-command.woofmark-command-code {
+      display: none; }
+    .wk-commands .wk-command + .wk-command {
+      border-left-width: 1px; }
+
+.wk-switchboard {
+  display: none; }
+
+/**
+ * COMMENTS
+ */
 .comments-section .comments-section--header {
-  padding: 10px 20px;
-}
-.comments-section .comments-section--header h2 {
-  border-bottom: 1px solid #ddd;
-  padding-bottom: 10px;
-}
+  padding: 10px 20px; }
+  .comments-section .comments-section--header h2 {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px; }
 
 /*# sourceMappingURL=message.css.map */

@@ -48,14 +48,17 @@ a {
   }
 }
 
-.button,button {
+.button, button {
+  display: inline-block;
   outline: 0;
   line-height: 2;
   background: lighten($secondary, 63%);
   border: 1px solid lighten($secondary, 33%);
   color: $secondary;
   cursor: pointer;
+  text-decoration: none;
   transition: background 350ms ease-in;
+  padding: 3px 5px;
   
   &:hover {
     background: lighten($secondary, 58%);
@@ -73,17 +76,17 @@ a {
   opacity:0;
   align-items: center;
   justify-content: center;
-  background: rgba(255,255,255,0);
+  background: rgba(0, 0, 0, 0);
   backdrop-filter: blur(1px);
   transition: background 500ms ease-in,
-              backdrop-filter 500ms ease-in,
+              backdrop-filter 200ms ease-in,
               opacity 250ms ease-in;
   
   &.show {
     pointer-events: initial;
     opacity:1;
-    background: rgba(255,255,255,0.3);
-    backdrop-filter: blur(2px);
+    background: rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(3px);
   }
   
   .inner {
@@ -175,6 +178,8 @@ a {
     flex: 0 0 200px;
     display: flex;
     align-items: stretch;
+    
+    a{ margin-right: 5px; }
     
     .icon.sign-in,
     .icon.sign-out {

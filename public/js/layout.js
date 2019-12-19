@@ -1,7 +1,5 @@
 (function(Vue,http){
-    let app;
-    
-    app = new Vue({
+    let layoutVue = new Vue({
         el:"#header--right",
         components: {
             'user': httpVueLoader('/vue/user.vue'),
@@ -33,8 +31,10 @@
                 }).then((res) => {
                     if(res.data && res.data.token){
                         this.user = jwt_decode(res.data.token);
-                        Cookies.set('token',res.data.token, {expires: 90});
                         this.hideLoginBox();
+                        //set token and trigger login event globally
+                        Cookies.set('token',res.data.token, {expires: 90});
+                        window.dispatchEvent((new Event('login')));
                     }
                 }).catch((err) => {
                     this.error = err.response.data.message;
@@ -45,8 +45,10 @@
                 if(this.user) {
                     http.get('/auth/logout').then((res) => {
                         this.user = void 0;
-                        Cookies.remove('token');
                         console.log("successful logout");
+                        //remove token and trigger logout event globally
+                        Cookies.remove('token');
+                        window.dispatchEvent((new Event('logout')));
                     });
                 }
             },
@@ -57,9 +59,11 @@
                 }
             }
         },
-        mounted: function(){
-            let token = Cookies.get('token');
-            if(token) { this.user = jwt_decode(token); }
+    });
+    window.addEventListener("load",function(){
+        let token = Cookies.get('token');
+        if(token) {
+            layoutVue.user = jwt_decode(token);
         }
     });
 })(Vue, axios);

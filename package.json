@@ -23,6 +23,7 @@
     "helmet": "^3.21.2",
     "http-errors": "~1.6.3",
     "jsonwebtoken": "^8.5.1",
+    "markdown-it": "^10.0.0",
     "moment": "^2.24.0",
     "mongoose": "^5.7.13",
     "morgan": "~1.9.1",

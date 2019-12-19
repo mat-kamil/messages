@@ -1,28 +1,44 @@
 <div class="message-page">
     <div class="message-section">
-        <div class="message-section--header">
-            <h1>{{message.title}}</h1>
-            <div class="message-dates">
-                <span class="meta-section" title="{{ message.created }}">
-                    <span class="meta-section--title">Created</span>
-                    <span class="meta-section--value">{{ fromNow message.created }}</span>
-                </span>
-                {{#if message.modified}}
-                    <span class="meta-section" title="{{ message.modified }}">
-                        <span class="meta-section--title">Modified</span>
-                        <span class="meta-section--value">{{ fromNow message.modified }}</span>
+        {{#if message }}
+            <div class="message-section--header">
+                <h1 id="title">{{message.title}}</h1>
+                <input type="text" id="title-edit" value="{{message.title}}"/>
+                <div class="message-dates">
+                    <span class="meta-section" title="{{ message.created }}">
+                        <span class="meta-section--title">Created</span>
+                        <span class="meta-section--value">{{ fromNow message.created }}</span>
                     </span>
-                {{/if}}
-                <span class="meta-section">
-                    <span class="meta-section--title">Viewed</span>
-                    <span class="meta-section--value">{{ message.views }}</span>
-                </span>
+                    {{#if message.modified}}
+                        <span class="meta-section" title="{{ message.modified }}">
+                            <span class="meta-section--title">Modified</span>
+                            <span class="meta-section--value">{{ fromNow message.modified }}</span>
+                        </span>
+                    {{/if}}
+                    <span class="meta-section">
+                        <span class="meta-section--title">Viewed</span>
+                        <span class="meta-section--value">{{ message.views }} times</span>
+                    </span>
+                </div>
             </div>
-        </div>
+        {{else }}
+            <div class="message-section--header">
+                <h1 id="title">New Message</h1>
+                <input type="text" id="title-edit" placeholder="New message title"/>
+            </div>
+        {{/if}}
+        <script>
+            let messageId = "{{ message.id }}";
+            let commentCount = "{{ message.comments }}";
+        </script>
         <div class="message-section--body">
-            <div class="message-section--content">
-                {{message.content}}
+            <div class="message-section--editable">
+                <editable class="editable-section" id="message-editable" v-pre>
+                    <textarea>{{message.content}}</textarea>
+                </editable>
             </div>
+            <div class="message-section--content" id="message-content">{{message.content}}</div>
+
             {{#if message.tags}}
                 <div class="tags">
                     {{#each tags }}
@@ -30,10 +46,14 @@
                     {{/each}}
                 </div>
             {{/if}}
-            <div class="message-section--body-lower">
-                <div class="change">
-                    <a href="#">edit</a>
-                </div>
+            <div class="message-section--body-lower" id="editable-vue">
+                {{{{raw}}}}
+                    <div class="error">{{error}}</div>
+                    <div class="change">
+                        <a href="#" @click="edit" id="edit-button">edit</a>
+                        <a href="#" @click="save" id="save-button">save</a>
+                    </div>
+                {{{{/raw}}}}
                 {{#if message.modified }}
                     <div class="message-section--edited">
                         <div class="date">Edited {{ fromNow message.modified }}</div>
@@ -61,13 +81,23 @@
             </div>
         </div>
     </div>
-    <div id="message-vue" class="comments-section">
-        <div class="comments-section--header">
-            <h2>{{ message.comments }} Comments</h2>
+    {{#if message }}
+        <div id="message-vue" class="comments-section">
+            {{{{raw}}}}
+                <div class="comments-section--header">
+                    <h2>{{ commentCount }} Comments</h2>
+                </div>
+                <comment v-for="comment of comments"
+                         v-bind:key="comment._id"
+                         v-bind:comment="comment"
+                         v-bind:user="user"
+                ></comment>
+                <comment-editor
+                        v-bind:type="`add`"
+                        v-bind:user="user"
+                        v-on:new-comment="updateComments()"
+                ></comment-editor>
+            {{{{/raw}}}}
         </div>
-        <comment v-for="comment of comments"
-                 v-bind:key="comment.id"
-                 v-bind:comment="comment"
-        ></comment>
-    </div>
+    {{/if }}
 </div>

@@ -12,14 +12,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- fixed scripts-->
-    <script src="/js/es6-promise.min.js"></script>
-    <script src="/js/sass.sync.js"></script>
-    <script src="/js/axios.min.js"></script>
-    <script src="/js/moment.min.js"></script>
-    <script src="/js/vue.min.js"></script>
-    <script src="/js/httpVueLoader.js"></script>
-    <script src="/js/js.cookie.min.js"></script>
-    <script src="/js/jwt-decode.min.js"></script>
+    <script src="/js/lib/es6-promise.min.js"></script>
+    <script src="/js/lib/sass.sync.js"></script>
+    <script src="/js/lib/axios.min.js"></script>
+    <script src="/js/lib/moment.min.js"></script>
+    <script src="/js/lib/vue.js"></script>
+    <script src="/js/lib/httpVueLoader.js"></script>
+    <script src="/js/lib/js.cookie.min.js"></script>
+    <script src="/js/lib/jwt-decode.min.js"></script>
 
     <!--httpVueLoader - scss loader-->
     <script>httpVueLoader.langProcessor.scss=function(scssText){return new Promise(function(resolve,reject){Sass.compile(scssText,function(result){result.status===0?resolve(result.text):reject(result)})})}</script>
@@ -32,13 +32,13 @@
         <a class="header--img" href="/">
             <img src="/assets/muzmessages-logo.png" alt="">
         </a>
-        <div class="header--centre"></div>
+        <div class="header--centre"><a class="button" href="/messages/new">+ Add a new message</a></div>
         <div class="header--right" id="header--right">
-            <i class="icon sign-in" title="Log In" v-if="!user" @click="openLoginBox()"></i>
+            {{{{raw}}}}
+            <i class="icon sign-in" title="Log In" v-if="!user" @click="openLoginBox"></i>
             <user v-if="user" v-bind:user="user"></user>
             <i class="icon sign-out" title="Log Out" v-if="!!user" @click="signout"></i>
 
-            {{{{raw}}}}
             <div id="login" v-bind:class="{ show: showLogin }" @click="onClickLoginBox">
                 <form class="inner" @submit="signin">
                     <div class="error" v-if="!!error">{{error}}</div>
