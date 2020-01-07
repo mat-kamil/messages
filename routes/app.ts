@@ -10,9 +10,9 @@ const helmet = require('helmet');
 const hbs  = require('hbs');
 const moment = require("moment");
 
-const Page = require('./routes/page');
-const Api = require('./routes/api');
-const Seeder = require('./includes/seeder');
+const Page = require('./page');
+const Api = require('./api');
+const Seeder = require('../includes/seeder');
 
 const app = express();
 

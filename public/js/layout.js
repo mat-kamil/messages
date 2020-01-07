@@ -55,7 +55,7 @@
             onClickLoginBox(event) {
                 let loginBox = document.querySelector('#login > .inner');
                 if(!loginBox.contains(event.target)) {
-                    app.hideLoginBox();
+                    layoutVue.hideLoginBox();
                 }
             }
         },
