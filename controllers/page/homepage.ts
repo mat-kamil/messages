@@ -11,7 +11,6 @@ export class PageHomepage {
      *  This is the default page (/)
      */
     private getPage = (req, res, next) => {
-        console.log("wtf");
         res.render('index', { title: 'MuzMessage' });
     };
 }
